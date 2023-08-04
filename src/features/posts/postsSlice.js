@@ -1,4 +1,4 @@
-import { createSlice, nanoid, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
 import { sub } from "date-fns";
 import axios from "axios";
 
@@ -152,9 +152,18 @@ export const getPostsStatus = (state) => state.posts.status
 export const getPostsError = (state) => state.posts.error
 export const getCount = (state) => state.posts.count
 
-
 export const selectPostById = (state, postId ) => 
   state.posts.posts.find(post => post.id === postId)
+
+// createSelector is a memoize selector. 
+// It accept 1 or more input function. There are inside of brackets
+// the return of their functions are the dependencies (like in useEffect)
+// They provide the input parameters for the output function (posts, userId)
+// the selector will re-run only if posts or userId change 
+export const selectPostsByUser = createSelector(
+  [selectAllPosts, (state, userId) => userId],
+  (posts, userId) => posts.filter(post => post.userId === userId)
+)
 
 export const { increaseCount, reactionAdded } = postsSlice.actions
 
