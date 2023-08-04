@@ -183,7 +183,7 @@ export const {
   selectById: selectPostById,
   selectIds: selectPostIds
   // Pass in a selector that returns the posts slice of state
-} = postsAdapter.getSelectors(state => selectPostsData(state) ?? initialState)
+} = postsAdapter.getSelectors(state => state.posts)
 
 // Action creators are generated for each case reducer function
 //export const selectAllPosts = (state) => state.posts.posts
